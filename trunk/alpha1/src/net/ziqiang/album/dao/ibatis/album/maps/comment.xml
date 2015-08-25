@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="Comment" type="net.ziqiang.album.domain.album.Comment"/>
+	<typeAlias alias="hashmap" type="java.util.HashMap"/>
+	
+	<select id="getCommentCountByPhotoId" parameterClass="int" resultClass="int">
+		SELECT count(*) FROM comment
+		WHERE photoId=#photoId#
+	</select>
+	<insert id="insertComment" parameterClass="Comment">
+		INSERT INTO comment(photoId,name,commentTime,contents,ip)
+		VALUES(#photoId#,#name#,#commentTime#,#contents#,#ip#)
+	</insert>
+	<delete id="deleteComment" parameterClass="int">
+		DELETE FROM comment WHERE commemtId=#commentId#
+	</delete>
+</sqlMap>

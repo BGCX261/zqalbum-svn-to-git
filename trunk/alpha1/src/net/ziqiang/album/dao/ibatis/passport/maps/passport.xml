@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+<typeAlias alias="userAuth" type="net.ziqiang.album.domain.passport.UserAuth" />
+<typeAlias alias="hashmap" type="java.util.HashMap" />
+
+<insert id="insertUserAuth" parameterClass="userAuth">
+	INSERT INTO user_auth(username,
+								password,
+								lastLoginIpV4,
+								lastLoginTimestamp,
+								privilege,
+								status)
+	VALUES(#username#,
+				#password#,
+				'000.000.000.000',
+				'1999-12-31 23:59:59',
+				#privilege#,
+				1)
+</insert>
+
+<select id="getUserAuthByUserName" parameterClass="string" resultClass="userAuth">
+	SELECT * FROM user_auth WHERE username=#value#
+</select>
+
+<select id="getUserAuthById" parameterClass="int" resultClass="userAuth">
+	SELECT * FROM user_auth WHERE userId=#value#
+</select>
+
+<select id="getUserAuthIdByUserName" parameterClass="string" resultClass="int">
+	SELECT userId FROM user_auth WHERE username=#value#
+</select>
+
+</sqlMap>

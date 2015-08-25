@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="AlbumCategory" type="net.ziqiang.album.domain.album.AlbumCategory"/>
+	<typeAlias alias="hashmap" type="java.util.HashMap"/>
+	<!-- insert -->
+	<insert id="insertAlbumCategory" parameterClass="AlbumCategory">
+		INSERT INTO album_category(name,description,albumNum)
+		VALUES (#name#,#description#,#albumNum#)
+	</insert>
+	<!-- insert -->
+	
+	<!-- select -->
+	<select id="getAlbumCategoryById" parameterClass="int" resultClass="AlbumCategory">
+		SELECT * FROM album_category WHERE categoryId=#categoryId#
+	</select>
+	<select id="getAlbumCategoryByName" parameterClass="String" resultClass="AlbumCategory">
+		SELECT * FROM album_category WHERE name=#name#
+	</select>
+	<!-- 获取所有相册的分类 -->
+	<select id="getAlbumCategorys" resultClass="AlbumCategory">
+		SELECT * FROM album_category
+	</select>
+	<!-- select -->
+	
+	<!-- update -->
+	<update id="updateAlbumCategory" parameterClass="AlbumCategory">
+		UPDATE album_category SET name=#name#,description=#description#,albumNum=#albumNum#
+		WHERE categoryId=#categoryId#
+	</update>
+	<update id="updateAlbumCategoryDescription" parameterClass="hashmap">
+		UPDATE album_category SET description=#description# WHERE categoryId=#categoryId#
+	</update>
+	<update id="updateAlbumCategoryAlbumNum" parameterClass="hashmap">
+		UPDATE album_category SET albumNum=#albumNum# WHERE categoryId=#categoryId#
+	</update>
+	<!-- update -->
+	
+	<!-- delete -->
+	<delete id="deleteAlbumCategoryById" parameterClass="int">
+		DELETE FROM album_category WHERE categoryId=#categoryId#
+	</delete>
+	<!-- delete -->
+</sqlMap>

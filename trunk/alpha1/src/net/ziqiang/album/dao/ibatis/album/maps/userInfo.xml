@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="UserInfo" type="net.ziqiang.album.domain.album.UserInfo"/>
+	<typeAlias alias="hashmap" type="java.util.HashMap"/>
+	<!-- insert -->
+	<insert id="insertUserInfo" parameterClass="UserInfo">
+		INSERT INTO user_info(userName,privilege,albumNum,rank)
+		VALUES(#userName#,#privilege#,#albumNum#,#rank#)
+	</insert>
+	<!-- insert -->
+	
+	<!-- select -->
+	<select id="getUserInfoById" parameterClass="int" resultClass="UserInfo">
+		SELECT * FROM user_info WHERE userId=#userId#
+	</select>
+	<select id="getUserInfoByUserName" parameterClass="String" resultClass="UserInfo">
+		SELECT * FROM user_info WHERE userName=#userName#
+	</select>
+	<select id="getUserInfoByRank" parameterClass="int" resultClass="UserInfo">
+		SELECT * FROM user_info WHERE rank=#rank#
+	</select>
+	<!-- select -->
+	
+	<!-- update -->
+	<update id="updateUserInfo" parameterClass="UserInfo">
+		UPDATE user_info SET userName=#userName#,privilege=#privilege#,albumNum=#albumNum#,rank=#rank#
+		WHERE userId=#userId#
+	</update>
+	<update id="updateUserInfoAlbumNum" parameterClass="hashmap">
+		UPDATE user_info SET albumNum=#albumNum# WHERE userId=#userId#
+	</update>
+	<update id="updateUserInfoRank" parameterClass="hashmap">
+		UPDATE user_info SET rank=#rank# WHERE userId=#userId#
+	</update>
+	<!-- update -->
+	
+	<!-- delete -->
+	<delete id="deleteUserInfoById" parameterClass="int">
+		DELETE FROM user_info WHERE userId=#userId#
+	</delete>
+	<!-- delete -->
+</sqlMap>

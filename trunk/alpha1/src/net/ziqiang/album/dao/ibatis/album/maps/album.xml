@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="Album" type="net.ziqiang.album.domain.album.Album"/>
+	<typeAlias alias="hashmap" type="java.util.HashMap"/>
+	<!-- insert -->
+	<insert id="insertAlbum" parameterClass="Album">
+		INSERT INTO album(userId,categoryId,createTime,updateTime,description,albumName,photoNum)
+		VALUES (#userId#,#categoryId#,#createTime#,#updateTime#,#description#,#albumName#,#photoNum#)
+	</insert>
+	<!-- insert -->
+	
+	<!-- select -->
+	<select id="getAlbums" resultClass="Album">
+		SELECT * FROM album
+	</select>
+	<select id="getAlbumById" parameterClass="int" resultClass="Album">
+		SELECT * FROM album WHERE albumId=#albumId#
+	</select>
+	<!-- 获取专区中所有相册，并分页 -->
+	<select id="getAlbumsByCategoryId" parameterClass="hashmap" resultClass="Album">
+		SELECT * FROM album WHERE categoryId=#categoryId#
+		ORDER BY albumId DESC
+		LIMIT #offset#,#count#
+	</select>
+	<select id="getAlbumsByUserId" parameterClass="int" resultClass="Album">
+		SELECT * FROM album WHERE userId=#userId#
+	</select>
+	<select id="getAlbumsByCreateTime" parameterClass="hashmap" resultClass="Album">
+		SELECT * FROM album WHERE createTime BETWEEN #startTime# AND #endTime#
+	</select>
+	<select id="getAlbumByName" parameterClass="String" resultClass="Album">
+		SELECT * FROM album WHERE albumName=#albumName#
+	</select>
+	<select id="getAlbumByNameUserId" parameterClass="hashmap" resultClass="Album">
+		SELECT * FROM album WHERE albumName=#albumName# AND userId=#userId#
+	</select>
+	<!-- 一个专区有多少个相册 -->
+	<select id="getAlbumCountByCategoryId" parameterClass="int" resultClass="int">
+		SELECT count(*) WHERE categoryId=#categoryId#
+	</select>
+	<!-- 一个用户有多少个相册 -->
+	<select id="getAlbumCountByUserId" parameterClass="int" resultClass="int">
+		SELECT count(*) WHERE userId=#userId#
+	</select>
+	<!-- select -->
+	
+	<!-- update -->
+	<update id="updateAlbum" parameterClass="Album">
+		UPDATE album SET userId=#userId#,categoryId=#categoryId#,createTime=#createTime#,updateTime=#updateTime#,description=#description#,albumName=#albumName#,photoNum=#photoNum#
+	</update>
+	<update id="updateAlbumName" parameterClass="hashmap">
+		UPDATE album SET albumName=#albumName# WHERE albumId=#albumId#
+	</update>
+	<update id="updateAlbumUpdateTime" parameterClass="hashmap">
+		UPDATE album SET updateTime=#updateTime# WHERE albumId=#albumId#
+	</update>
+	<update id="updateAlbumDescription" parameterClass="hashmap">
+		UPDATE album SET description=#description# WHERE albumId=#albumId#
+	</update>
+	<update id="updateAlbumPhotoNum" parameterClass="hashmap">
+		UPDATE album SET photoNum=#photoNum# WHERE albumId=#albumId#
+	</update>
+	<update id="updateAlbumCategoryId">
+		UPDATE album SET categoryId=#categoryId# WHERE albumId=#albumId#
+	</update>
+	<!-- update -->
+	
+	<!-- delete -->
+	<delete id="deleteAlbumById" parameterClass="int">
+		DELETE FROM album WHERE albumId=#albumId#
+	</delete>
+	<!-- delete -->
+</sqlMap>

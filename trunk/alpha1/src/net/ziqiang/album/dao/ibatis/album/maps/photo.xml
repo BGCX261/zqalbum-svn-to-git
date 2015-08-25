@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap>
+	<typeAlias alias="Photo" type="net.ziqiang.album.domain.album.Photo"/>
+	<typeAlias alias="hashmap" type="java.util.HashMap"/>
+	<!-- insert -->
+	<insert id="insertPhoto" parameterClass="Photo">
+		INSERT INTO photo(albumId,description,hit,status,photoName,address,uploadTime,commentNum)
+		VALUES (#albumId#,#description#,#hit#,#status#,#photoName#,#address#,#uploadTime#,#commentNum#)
+	</insert>
+	<!-- insert -->
+	
+	<!-- select -->
+	<select id="getPhotoById" parameterClass="int" resultClass="Photo">
+		SELECT * FROM photo WHERE photoId=#photoId#
+	</select>
+	<select id="getPhotosByAlbumId" parameterClass="int" resultClass="Photo">
+		SELECT * FROM photo WHERE albumId=#albumId#
+	</select>
+	<select id="getPhotosByHit" parameterClass="int" resultClass="Photo">
+		SELECT * FROM photo ORDER BY hit DESC LIMIT 0,#count#
+	</select>
+	<select id="getPhotoByPhotoName" parameterClass="String" resultClass="Photo">
+		SELECT * FROM photo WHERE photoName=#photoName#
+	</select>
+	<select id="getPhotosByUploadTime" parameterClass="hashmap" resultClass="Photo">
+		SELECT * FROM photo WHERE uploadTime BETWEEN #startTime# AND #endTime#
+	</select>
+	<!-- 获取某个相册中通过审核的图片，并进行分页 -->
+	<select id="getPhotosByAlbumIdStatus" parameterClass="hashmap" resultClass="Photo">
+		SELECT * FROM photo 
+		WHERE albumId=#albumId# AND status=#status#
+		ORDER BY photoId DESC
+		LIMIT #offset#,#count#
+	</select>
+	<!-- 获取某个相册中通过审核的照片数量 -->
+	<select id="getPhotoCount" parameterClass="hashmap" resultClass="int">
+		SELECT count(*) FROM photo WHERE albumId=#albumId# AND status=#status#
+	</select>
+	<!-- select -->
+	
+	<!-- update -->
+	<update id="updatePhoto" parameterClass="Photo">
+		UPDATE photo SET albumId=#albumId#,description=#description#,hit=#hit#,status=#status#,photoName=#photoName#,address=#address#,uploadTime=#uploadTime#,commentNum=#commentNum#
+		WHERE photoId=#photoId#
+	</update>
+	<update id="updatePhotoDescription" parameterClass="hashmap">
+		UPDATE photo SET description=#description# WHERE photoId=#photoId#
+	</update>
+	<update id="updatePhotoHit" parameterClass="hashmap">
+		UPDATE photo SET hit=#hit# WHERE photoId=#photoId#
+	</update>
+	<update id="updatePhotoStatus" parameterClass="hashmap">
+		UPDATE photo SET status=#status# WHERE photoId=#photoId#
+	</update>
+	<update id="updatePhotoName" parameterClass="hashmap">
+		UPDATE photo SET photoName=#photoName# WHERE photoId=#photoId#
+	</update>
+	<!-- update -->
+	
+	<!-- delete -->
+	<delete id="deletePhotoById" parameterClass="int">
+		DELETE FROM photo WHERE photoId=#photoId#
+	</delete>
+	<!-- delete -->
+</sqlMap>
